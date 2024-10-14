@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@<your-ec2-public-ip> << 'EOF'
+          ssh -o StrictHostKeyChecking=no ec2-user@16.170.246.200 << 'EOF'
           cd /home/ec2-user/node-hello-world
           git pull origin main
           docker build -t node-hello-world .
