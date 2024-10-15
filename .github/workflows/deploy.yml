@@ -14,15 +14,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.7.1
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2
         run: |
-          ssh -tt -o StrictHostKeyChecking=no
+         ssh -tt -o StrictHostKeyChecking=no \
           -o ServerAliveInterval=60 \
-          ec2-user@16.170.246.200 << 'EOF'
+          ec2-user@<your-ec2-public-ip> <<EOF
           cd /home/ec2-user/node-hello-world
           git pull origin main
           docker build -t node-hello-world .
@@ -30,4 +30,3 @@ jobs:
           docker rm node-app || true
           docker run -d --name node-app -p 3000:3000 node-hello-world
           EOF
-
